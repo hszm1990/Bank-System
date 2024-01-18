@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Factories\Payment\PaymentFactory;
 use App\Services\BasePayment;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,9 +20,11 @@ class PaymentServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        PaymentFactory::$instances = config('payment.methods');
         $this->app->singleton(BasePayment::class, function ($app, $params) {
-            return $app->make(PaymentFactory::make($params['method']));
+            if (!array_key_exists($params['method'], config('payment.methods'))) {
+                throw new \Exception('Method is not valid.');
+            }
+            return $app->make(config('payment.methods')[$params['method']]);
         });
     }
 }

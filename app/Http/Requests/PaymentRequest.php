@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Factories\Payment\PaymentFactory;
 use App\Rules\CardValidator;
 use App\Traits\ConvertNumericFields;
 use Illuminate\Foundation\Http\FormRequest;
@@ -46,7 +45,7 @@ class PaymentRequest extends FormRequest
                 'required', 'numeric',
                 'between:' . config('payment.min') . ',' . config('payment.max')
             ],
-            'payment_method' => Rule::in(array_keys(PaymentFactory::$instances))
+            'payment_method' => Rule::in(array_keys(config('payment.methods')))
         ];
     }
 

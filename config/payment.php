@@ -1,14 +1,10 @@
 <?php
 
-use App\Services\AccountPaymentService;
-use App\Services\CardPaymentService;
-
 return [
     'methods' => [
-        'CardPayment' => CardPaymentService::class,
-        'AccountPayment' => AccountPaymentService::class
+        'CardPayment' => App\Services\CardPaymentService::class,
+        'AccountPayment' => App\Services\AccountPaymentService::class
     ],
     'min' => 1000,
     'max' => 10000000,
-
 ];

@@ -20,11 +20,14 @@ class PaymentServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->singleton(BasePayment::class, function ($app, $params) {
-            if (!array_key_exists($params['method'], config('payment.methods'))) {
+        $this->app->bind(BasePayment::class, function ($app, $params) {
+            $method = $params['method'];
+            if (!array_key_exists($method, $methods = config('payment.methods'))) {
                 throw new \Exception('Method is not valid.');
             }
-            return $app->make(config('payment.methods')[$params['method']]);
+            $paymentMethod = $app->make($methods[$method]);
+            $paymentMethod->setFee(config('payment.fee')[$method]);
+            return $paymentMethod;
         });
     }
 }

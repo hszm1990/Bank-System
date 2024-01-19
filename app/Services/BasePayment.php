@@ -33,7 +33,7 @@ abstract class BasePayment
         $this->amount = $amount;
     }
 
-    protected function setFee($fee)
+    public function setFee($fee): void
     {
         $this->fee = $fee;
     }

@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class CardPaymentService extends BasePayment
 {
-    protected int $fee = 500;
-
     /**
      * @throws BalanceShortageException
      */
